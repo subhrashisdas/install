@@ -11,7 +11,7 @@ touch ~/.config/systemd/user/metabase.service
 # loginctl user-status USERNAME
 
 [Service]
-ExecStart=/usr/bin/env {{HOME}}/lib/java/bin/java -jar {{HOME}}/lib/metabase.jar
+ExecStart=/usr/bin/env /home/subhrashis2/lib/java/bin/java -jar /home/subhrashis2/lib/metabase.jar
 RestartSec=10s
 Restart=on-failure
 
