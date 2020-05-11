@@ -1,4 +1,6 @@
-SELECT coalesce(json_agg("root"), '[]') AS "root" FROM (
+SELECT
+    coalesce(json_agg(all_data), '[]') AS data_row
+FROM (
     SELECT
         *
     FROM box
@@ -28,4 +30,4 @@ SELECT coalesce(json_agg("root"), '[]') AS "root" FROM (
                 LIMIT 1
             ) AS actual_rows
         ) AS any_name_2 ON ('true')
-) AS "root";
+) AS all_data;
