@@ -4,19 +4,15 @@ SELECT coalesce(json_agg("root"), '[]') AS "root" FROM (
     FROM box
         LEFT OUTER JOIN LATERAL (
             SELECT
-                coalesce(json_agg(rows_with_object.json_object), '[]') AS "items"
+                coalesce(json_agg(actual_rows), '[]') AS "items"
             FROM (
+                 -- Actual rows
                 SELECT
-                    row_to_json(actual_rows) AS json_object
-                FROM (
-                    -- Actual rows
-                    SELECT
-                        *
-                    FROM item
-                    WHERE
-                        box.id = item.box_id
-                ) AS actual_rows
-            ) AS rows_with_object
+                    *
+                FROM item
+                WHERE
+                    box.id = item.box_id
+            ) AS actual_rows
         ) AS any_name_1 ON ('true')
         LEFT OUTER JOIN LATERAL (
             SELECT
@@ -28,6 +24,8 @@ SELECT coalesce(json_agg("root"), '[]') AS "root" FROM (
                 FROM item
                 WHERE
                     box.id = item.box_id
+                -- If limit isn't added then it will create two rows
+                LIMIT 1
             ) AS actual_rows
         ) AS any_name_2 ON ('true')
 ) AS "root";
