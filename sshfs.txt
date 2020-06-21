@@ -1,0 +1,1 @@
+sudo sshfs -o allow_other,default_permissions,IdentityFile=/Users/myth/.ssh/id_rsa ubuntu@54.152.29.19:/ /Users/myth/Desktop/backup
