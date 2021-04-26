@@ -1,6 +1,8 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
 import fs from "fs/promises";
 
+let i = 0;
+
 async function addPdf(datum) {
   const existingPdfBytes = await fs.readFile("../nomination_form.pdf");
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -34,7 +36,7 @@ async function addPdf(datum) {
   firstPage.drawText(datum.scheme_name.toUpperCase(), { x: 89, y: height / 2 + 202, size: 9, font: font });
   firstPage.drawText(datum.folio_number.toUpperCase(), { x: 438, y: height / 2 + 202, size: 9, font: font });
   const pdfBytes = await pdfDoc.save();
-  await fs.writeFile(`./pdf/${datum.search_id}.pdf`, pdfBytes);
+  await fs.writeFile(`./pdf/${(++i <= 9 ? `0${i}` : i) + '-'}${datum.search_id}.pdf`, pdfBytes);
 }
 
 async function main() {
